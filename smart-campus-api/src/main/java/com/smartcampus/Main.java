@@ -7,6 +7,7 @@ package com.smartcampus;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
+import com.smartcampus.filter.LoggingFilter;
 
 import java.net.URI;
 
@@ -20,7 +21,8 @@ public class Main {
         URI uri = URI.create("http://localhost:8080/api/v1/");
 
         ResourceConfig config = new ResourceConfig()
-                .packages("com.smartcampus");
+                .packages("com.smartcampus")
+                .register(LoggingFilter.class);
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, config);
 
