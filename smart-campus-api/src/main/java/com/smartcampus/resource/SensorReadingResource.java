@@ -7,6 +7,7 @@ package com.smartcampus.resource;
 import com.smartcampus.model.Sensor;
 import com.smartcampus.model.SensorReading;
 import com.smartcampus.store.DataStore;
+import com.smartcampus.exception.SensorUnavailableException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -58,9 +59,7 @@ public class SensorReadingResource {
         }
 
         if ("MAINTENANCE".equalsIgnoreCase(sensor.getStatus())) {
-            return Response.status(Response.Status.FORBIDDEN)
-                    .entity("Sensor is under maintenance and cannot accept readings")
-                    .build();
+            throw new SensorUnavailableException("Sensor is under maintenance and cannot accept readings");
         }
 
         if (reading == null || reading.getId() == null || reading.getId().trim().isEmpty()) {

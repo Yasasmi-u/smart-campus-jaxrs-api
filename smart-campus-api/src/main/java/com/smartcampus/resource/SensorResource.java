@@ -7,6 +7,7 @@ package com.smartcampus.resource;
 import com.smartcampus.model.Room;
 import com.smartcampus.model.Sensor;
 import com.smartcampus.store.DataStore;
+import com.smartcampus.exception.LinkedResourceNotFoundException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -53,9 +54,7 @@ public class SensorResource {
         Room room = DataStore.rooms.get(sensor.getRoomId());
 
         if (room == null) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("Invalid roomId - room does not exist")
-                    .build();
+            throw new LinkedResourceNotFoundException("Invalid roomId - room does not exist");
         }
 
         // Save sensor

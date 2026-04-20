@@ -20,7 +20,7 @@ public class Main {
         URI uri = URI.create("http://localhost:8080/api/v1/");
 
         ResourceConfig config = new ResourceConfig()
-                .packages("com.smartcampus.resource");
+                .packages("com.smartcampus");
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, config);
 

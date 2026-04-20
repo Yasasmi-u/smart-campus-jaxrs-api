@@ -6,6 +6,7 @@ package com.smartcampus.resource;
 
 import com.smartcampus.model.Room;
 import com.smartcampus.store.DataStore;
+import com.smartcampus.exception.RoomNotEmptyException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
