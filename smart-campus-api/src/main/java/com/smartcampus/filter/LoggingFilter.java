@@ -11,6 +11,7 @@ import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,22 +20,18 @@ import java.time.LocalDateTime;
 @Provider
 public class LoggingFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
+    private static final Logger LOGGER = Logger.getLogger(LoggingFilter.class.getName());
+
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        System.out.println(
-                "[" + LocalDateTime.now() + "] Incoming Request: "
-                        + requestContext.getMethod() + " "
-                        + requestContext.getUriInfo().getRequestUri()
-        );
+        LOGGER.info("Incoming Request: " +
+                requestContext.getMethod() + " " +
+                requestContext.getUriInfo().getRequestUri());
     }
 
     @Override
     public void filter(ContainerRequestContext requestContext,
                        ContainerResponseContext responseContext) throws IOException {
-
-        System.out.println(
-                "[" + LocalDateTime.now() + "] Outgoing Response: Status "
-                        + responseContext.getStatus()
-        );
+        LOGGER.info("Outgoing Response: Status " + responseContext.getStatus());
     }
 }
