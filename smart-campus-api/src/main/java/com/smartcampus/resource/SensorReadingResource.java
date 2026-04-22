@@ -8,12 +8,14 @@ import com.smartcampus.model.Sensor;
 import com.smartcampus.model.SensorReading;
 import com.smartcampus.store.DataStore;
 import com.smartcampus.exception.SensorUnavailableException;
+import com.smartcampus.model.ErrorResponse;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -34,7 +36,7 @@ public class SensorReadingResource {
 
         if (sensor == null) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Sensor not found")
+                    .entity(new ErrorResponse(404, "Not Found", "Sensor with ID '" + sensorId + "' not found"))
                     .build();
         }
 
@@ -54,7 +56,7 @@ public class SensorReadingResource {
 
         if (sensor == null) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Sensor not found")
+                    .entity(new ErrorResponse(404, "Not Found", "Sensor with ID '" + sensorId + "' not found"))
                     .build();
         }
 
@@ -62,10 +64,18 @@ public class SensorReadingResource {
             throw new SensorUnavailableException("Sensor is under maintenance and cannot accept readings");
         }
 
-        if (reading == null || reading.getId() == null || reading.getId().trim().isEmpty()) {
+        if (reading == null) {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("Reading ID is required")
+                    .entity(new ErrorResponse(400, "Bad Request", "Request body is required"))
                     .build();
+        }
+
+        // Auto-generate ID and timestamp if not provided
+        if (reading.getId() == null || reading.getId().trim().isEmpty()) {
+            reading.setId(UUID.randomUUID().toString());
+        }
+        if (reading.getTimestamp() == 0) {
+            reading.setTimestamp(System.currentTimeMillis());
         }
 
         DataStore.readings.putIfAbsent(sensorId, new ArrayList<>());
