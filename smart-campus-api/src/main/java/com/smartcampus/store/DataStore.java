@@ -8,16 +8,16 @@ import com.smartcampus.model.Room;
 import com.smartcampus.model.Sensor;
 import com.smartcampus.model.SensorReading;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
  * @author ASUS
  */
 public class DataStore {
-    public static Map<String, Room> rooms = new HashMap<>();
-    public static Map<String, Sensor> sensors = new HashMap<>();
-    public static Map<String, List<SensorReading>> readings = new HashMap<>();    
+    public static Map<String, Room> rooms = new ConcurrentHashMap<>();
+    public static Map<String, Sensor> sensors = new ConcurrentHashMap<>();
+    public static Map<String, List<SensorReading>> readings = new ConcurrentHashMap<>();    
 }
