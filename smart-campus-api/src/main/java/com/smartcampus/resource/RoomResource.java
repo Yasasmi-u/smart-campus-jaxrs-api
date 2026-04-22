@@ -39,8 +39,9 @@ public class RoomResource {
         DataStore.rooms.put(room.getId(), room);
 
         return Response.status(Response.Status.CREATED)
-                .entity(room)
-                .build();
+        .entity(room)
+        .header("Location", "/api/v1/rooms/" + room.getId())
+        .build();
     }
 
     @GET
