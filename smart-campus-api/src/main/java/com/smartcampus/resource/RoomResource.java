@@ -7,6 +7,7 @@ package com.smartcampus.resource;
 import com.smartcampus.model.Room;
 import com.smartcampus.store.DataStore;
 import com.smartcampus.exception.RoomNotEmptyException;
+import com.smartcampus.model.ErrorResponse;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -49,7 +50,7 @@ public class RoomResource {
 
         if (room == null) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Room not found")
+                    .entity(new ErrorResponse(404, "Not Found", "Room with ID '" + roomId + "' not found"))
                     .build();
         }
 
@@ -63,7 +64,7 @@ public class RoomResource {
 
         if (room == null) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Room not found")
+                    .entity(new ErrorResponse(404, "Not Found", "Room with ID '" + roomId + "' not found"))
                     .build();
         }
 
