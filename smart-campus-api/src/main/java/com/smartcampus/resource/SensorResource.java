@@ -64,8 +64,9 @@ public class SensorResource {
         room.getSensorIds().add(sensor.getId());
 
         return Response.status(Response.Status.CREATED)
-                .entity(sensor)
-                .build();
+        .entity(sensor)
+        .header("Location", "/api/v1/sensors/" + sensor.getId())
+        .build();
     }
     @Path("/{sensorId}/readings")
     public SensorReadingResource getSensorReadingResource(@PathParam("sensorId") String sensorId) {
